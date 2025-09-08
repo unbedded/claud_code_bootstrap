@@ -259,22 +259,67 @@ python .claude/tools/validate_setup.py --check-all
 
 ## Quick Start
 
-1. **Template Setup**: Use the bootstrap script to render placeholders:
-   ```bash
-   python .claude/tools/bootstrap_env.py --package myproject --python 3.13
-   ```
-   This replaces:
-   - `__RUFF_TARGET__` → Python version target (e.g., `py313`)
-   - `__MYPY_PY_VERSION__` → MyPy Python version (e.g., `3.13`)
-   - `__PKG__` → Your package name
+### 🚀 **Using This as a GitHub Template (Recommended)**
 
-2. **GitFlow Initialization**:
+1. **Make This a Template Repository**:
+   - Go to your repo settings on GitHub
+   - Check **"Template repository"** under "General"
+   - Save changes
+
+2. **Create New Project from Template**:
+   ```bash
+   # On GitHub.com: Click "Use this template" → Create new repository
+   # Clone your new repository
+   git clone https://github.com/yourusername/your_new_project.git
+   cd your_new_project
+   
+   # Bootstrap the project (replaces placeholders)
+   python .claude/tools/bootstrap_python.py --package your_new_project --python 3.13 --author "Your Name" --install --create-venv
+   
+   # Commit bootstrapped changes
+   git add .
+   git commit -m "Bootstrap project from Claude Code template"
+   git push
+   ```
+
+### 📋 **Manual Template Setup**
+
+1. **Clone and Setup**:
+   ```bash
+   # Clone template
+   git clone https://github.com/unbedded/claud_code_bootstrap_python.git my_new_project
+   cd my_new_project
+   
+   # Remove template git history
+   rm -rf .git
+   git init
+   git branch -M main
+   
+   # Bootstrap project
+   python .claude/tools/bootstrap_python.py --package my_new_project --python 3.13 --author "Your Name" --install --create-venv
+   
+   # Connect to your GitHub repo (create on GitHub first)
+   git remote add origin https://github.com/yourusername/my_new_project.git
+   git add .
+   git commit -m "Initial commit: Python project from Claude Code template"  
+   git push -u origin main
+   ```
+
+2. **What Bootstrap Does**:
+   - Replaces `__RUFF_TARGET__` → Python version target (e.g., `py313`)
+   - Replaces `__MYPY_PY_VERSION__` → MyPy Python version (e.g., `3.13`)
+   - Replaces `__PKG__` → Your package name
+   - Creates `src/your_package/` directory structure
+   - Updates all configuration files with your project details
+   - Sets up virtual environment and installs dependencies
+
+3. **GitFlow Initialization**:
    ```bash
    git flow init
    # Uses predefined branch conventions from .gitflow
    ```
 
-3. **Development Workflow**:
+4. **Development Workflow**:
    ```bash
    # Start new feature (via Claude or command line)
    /gitflow-start feature user-auth
@@ -293,7 +338,7 @@ python .claude/tools/validate_setup.py --check-all
    # OR: git flow feature finish user-auth
    ```
 
-4. **Version Management**:
+5. **Version Management**:
    - Use `.claude/tools/version_bump.py` for PEP 440 compliant version updates
    - Supports pre-release tags: `1.2.3a1`, `1.2.3b2`, `1.2.3rc1`
    - Automatically updates VERSION file and CHANGELOG.md
@@ -351,16 +396,39 @@ This template is optimized for Claude Code development with:
 ## Recommended Workflow Combinations
 
 ### 🏗️ Environment Setup & Management:
+
+#### **🚀 From GitHub Template (Recommended)**
 ```bash
-# 🐍 PYTHON PROJECT SETUP
-python .claude/tools/bootstrap_python.py --package myproject --python 3.13 --author "Your Name" --install --create-venv
-# Creates complete Python project with dev environment
+# Step 1: Use GitHub template (one-time setup)
+# Go to repo settings → Check "Template repository"
+
+# Step 2: Create new project from template
+# On GitHub: Click "Use this template" → Create repository
+
+# Step 3: Clone and bootstrap
+git clone https://github.com/yourusername/your_new_project.git
+cd your_new_project
+python .claude/tools/bootstrap_python.py --package your_new_project --python 3.13 --author "Your Name" --install --create-venv
+git add . && git commit -m "Bootstrap project from template" && git push
+```
+
+#### **📋 Manual Template Setup**
+```bash
+# 🐍 PYTHON PROJECT SETUP (Manual)
+git clone https://github.com/unbedded/claud_code_bootstrap_python.git my_new_project
+cd my_new_project && rm -rf .git && git init && git branch -M main
+python .claude/tools/bootstrap_python.py --package my_new_project --python 3.13 --author "Your Name" --install --create-venv
+git remote add origin https://github.com/yourusername/my_new_project.git
+git add . && git commit -m "Initial commit from Claude Code template" && git push -u origin main
 
 # ⚡ C++ PROJECT SETUP (Future - Currently TODO)
 python .claude/tools/bootstrap_cpp.py --package myproject --cmake 3.20 --std 20 --conan
 # Will create C++ project when fully implemented
+```
 
-# 🔧 CONFIGURATION UPDATES  
+#### **🔧 Ongoing Management**
+```bash
+# CONFIGURATION UPDATES  
 python .claude/tools/update_config.py --python 3.13 --validate
 # Updates all tool configs when Python version changes
 
@@ -368,7 +436,7 @@ python .claude/tools/update_config.py --python 3.13 --validate
 python .claude/tools/validate_setup.py --check-all --fix-issues --report
 # Ensures project structure and configs are correct
 
-# 🔄 ONGOING MAINTENANCE
+# 🔄 MAINTENANCE
 python .claude/tools/validate_setup.py --check-all          # Regular health checks
 python .claude/tools/update_config.py --ruff-target py314   # Tool updates
 ```
