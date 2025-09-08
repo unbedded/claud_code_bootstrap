@@ -1,43 +1,16 @@
-# Smart Commit - Generate Meaningful Commit Messages
+Generate meaningful commit message from staged changes: $ARGUMENTS
 
-**Description:** Analyzes staged changes and generates meaningful commit messages following conventional commit patterns.
+Options:
+- `--stage-all` - Stage all changes before analyzing and committing
 
-**Usage:** `/smart-commit [--stage-all]`
+Implementation:
+1. If `--stage-all` specified, run `git add .`
+2. Check for staged changes with `git status --porcelain`
+3. Analyze staged changes with `git diff --cached`
+4. Generate conventional commit message based on:
+   - Change type (feat, fix, docs, refactor, etc.)
+   - Affected scope/module
+   - Clear description of changes
+5. Create commit with generated message including Claude Code attribution
 
-## Options
-
-- `--stage-all`: Stage all changes before generating commit message
-
-## How it works
-
-1. **Analyze Changes**: Examines staged files and their modifications
-2. **Generate Message**: Creates conventional commit message based on:
-   - Type of changes (feat, fix, docs, refactor, etc.)
-   - Scope of changes (module/component affected)
-   - Clear, concise description
-3. **Follow Patterns**: Adheres to project's commit message conventions
-4. **Create Commit**: Executes git commit with generated message
-
-## Implementation
-
-This command will:
-- Run `git status` to check staged changes
-- If `--stage-all` is used, run `git add .` first
-- Run `git diff --cached` to analyze staged changes
-- Use Claude's analysis to generate a conventional commit message
-- Execute the commit with the generated message
-- Include the standard Claude Code attribution
-
-## Example Output
-
-```
-feat(auth): add user authentication with JWT tokens
-
-- Implement JWT token generation and validation
-- Add login/logout endpoints
-- Create user session management
-- Update security middleware
-
-🤖 Generated with Claude Code
-Co-Authored-By: Claude <noreply@anthropic.com>
-```
+Follows conventional commit format and project patterns from recent commit history.
