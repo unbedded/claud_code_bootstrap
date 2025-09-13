@@ -88,14 +88,14 @@ class AppConfig(BaseSettings):
     log_level: str = Field(default="WARNING", env="LOG_LEVEL")
     database_url: Optional[str] = Field(default=None, env="DATABASE_URL")
     api_key: Optional[str] = Field(default=None, env="API_KEY")
-    
+
     @validator('log_level')
     def validate_log_level(cls, v):
         valid_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
         if v.upper() not in valid_levels:
             raise ValueError(f'Invalid log level: {v}')
         return v.upper()
-    
+
     class Config:
         env_file = ".env"
         case_sensitive = False
@@ -115,3 +115,9 @@ class AppConfig(BaseSettings):
 ## Workflow Notes
 - Use `.claude/commands/new_module.md` to scaffold modules with tests.
 - After edits, run: `make quality && make test-full`.
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.

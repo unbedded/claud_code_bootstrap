@@ -60,4 +60,4 @@ This project uses PEP 440 compliant versioning:
 - **Patch**: Bug fixes, small improvements
 - **Pre-release**: Development versions, testing builds
 
-Use `.claude/tools/version_bump.py` or `/bump-version` slash command to manage versions automatically.
+Use `.claude/tools/version_bump.py` or `/version-bump` slash command to manage versions automatically.

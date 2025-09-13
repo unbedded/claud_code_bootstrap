@@ -269,12 +269,11 @@ class TestSanity:
                 "your.email@example.com": self.cfg_dict["email"],
             }
             
-            # Replace placeholders in existing files
+            # Replace placeholders in existing files (CLAUDE.md will be copied from template)
             config_files = [
                 Path("pyproject.toml"),
-                Path("CLAUDE.md"),
             ]
-            
+
             for config_file in config_files:
                 if config_file.exists():
                     self.common.replace_placeholders(config_file, replacements)
@@ -407,6 +406,7 @@ class TestSanity:
             ("Create VS Code settings", self.common.create_vscode_settings),
             ("Initialize changelog", self.common.initialize_changelog),
             ("Copy .claude directory", lambda: self.common.copy_claude_directory()),
+            ("Copy Python CLAUDE.md standards", lambda: self.common.copy_language_specific_claude_md("python")),
             ("Create virtual environment", self.create_virtual_environment),
             ("Install dependencies", self.install_dependencies),
         ]

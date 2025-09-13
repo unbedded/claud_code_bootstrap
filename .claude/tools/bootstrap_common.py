@@ -411,6 +411,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             self.logger.exception(error_msg)
             return False
 
+    def copy_language_specific_claude_md(self, language: str) -> bool:
+        """
+        Copy language-specific CLAUDE.md template to project root.
+
+        Args:
+            language: Programming language (python, cpp, rust, go, etc.)
+
+        Returns:
+            True if successful
+        """
+        try:
+            template_name = f"CLAUDE-{language}.md"
+            template_path = Path(f".claude/templates/{template_name}")
+            target_path = Path("CLAUDE.md")
+
+            if not template_path.exists():
+                self.logger.error("Language-specific CLAUDE.md template not found: %s", template_path)
+                print(f"❌ Template not found: {template_name}")
+                return False
+
+            # Copy template to project root
+            shutil.copy2(template_path, target_path)
+
+            self.logger.info("Copied language-specific CLAUDE.md template: %s", template_name)
+            print(f"✅ Copied {language} CLAUDE.md standards")
+            return True
+
+        except Exception as e:
+            error_msg = f"Failed to copy language-specific CLAUDE.md template: {e}"
+            self.logger.exception(error_msg)
+            print(f"❌ {error_msg}")
+            return False
+
 
 def setup_logging() -> None:
     """Configure logging with file output and appropriate levels."""

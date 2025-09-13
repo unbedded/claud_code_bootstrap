@@ -542,6 +542,7 @@ CMakeToolchain
             ("Create VS Code settings", self.common.create_vscode_settings),
             ("Initialize changelog", self.common.initialize_changelog),
             ("Copy .claude directory", lambda: self.common.copy_claude_directory()),
+            ("Copy C++ CLAUDE.md standards", lambda: self.common.copy_language_specific_claude_md("cpp")),
         ]
         
         failed_steps = []
