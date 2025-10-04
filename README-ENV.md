@@ -151,7 +151,13 @@ git clone https://github.com/yourusername/your_new_project.git
 cd your_new_project
 
 # Bootstrap for your language (automatically copies language-specific CLAUDE.md)
-python .claude/tools/bootstrap_python.py --package your_project --python 3.13 --author "Your Name"
+python3 .claude/tools/bootstrap_python.py --package your_project --python 3.13 --author "Your Name"
+
+
+## you might ened to set project.toml file version to 3.10=>
+python3 .claude/tools/bootstrap_python.py --create-venv  --python 3.13 --author "Spencer Barrett" --package <your_project>
+
+
 # OR for C++: python .claude/tools/bootstrap_cpp.py --package your_project
 
 # Generate appropriate Makefile

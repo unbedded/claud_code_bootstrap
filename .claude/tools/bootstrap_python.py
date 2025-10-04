@@ -318,30 +318,46 @@ class TestSanity:
     def create_virtual_environment(self) -> bool:
         """
         Create Python virtual environment.
-        
+
         Returns:
             True if successful
         """
         if not self.cfg_dict["create_venv"]:
             self.logger.debug("Virtual environment creation disabled")
             return True
-        
+
         try:
             venv_path = Path(".venv")
-            
+
             if venv_path.exists():
                 self.logger.info("Virtual environment already exists")
                 return True
-            
-            # STEP_8: Create virtual environment
+
+            # STEP_8: Create virtual environment with specified Python version
+            python_version = self.cfg_dict["python_version"]
+            python_exec = f"python{python_version}"
+
+            # Try to find the specified Python version
+            try:
+                result = subprocess.run(
+                    [python_exec, "--version"],
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                self.logger.info("Using Python: %s (%s)", python_exec, result.stdout.strip())
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                self.logger.warning("Python %s not found, falling back to sys.executable", python_exec)
+                python_exec = sys.executable
+
             subprocess.run([
-                sys.executable, "-m", "venv", ".venv"
+                python_exec, "-m", "venv", ".venv"
             ], check=True)
-            
-            self.logger.info("Created virtual environment")
-            print("✅ Created virtual environment (.venv)")
+
+            self.logger.info("Created virtual environment with %s", python_exec)
+            print(f"✅ Created virtual environment (.venv) with {python_exec}")
             return True
-            
+
         except subprocess.CalledProcessError as e:
             error_msg = f"Failed to create virtual environment: {e}"
             self.logger.error(error_msg)
