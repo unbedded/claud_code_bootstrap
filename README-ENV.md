@@ -28,12 +28,11 @@ This repository serves as a comprehensive template for **Python 3.13.5** and **C
 ├── src/                    # Source code (language-agnostic structure)
 ├── tests/                  # Test suite (language-appropriate)
 ├── CLAUDE.md               # Language-specific coding standards (auto-copied from template)
-├── CHANGELOG.md            # Release history
 ├── VERSION                 # Current version (language-agnostic)
+├── CHANGELOG.md            # Release history
 ├── Makefile               # Generated language-specific targets
 ├── pyproject.toml          # Python: Build and tool configuration
-├── CMakeLists.txt          # C++: Build and test configuration
-└── requirements.txt        # Python: Dependencies
+└── CMakeLists.txt          # C++: Build and test configuration
 ```
 
 ## 📋 **Streamlined Command Structure**
@@ -132,7 +131,7 @@ make version-sync # Sync VERSION file to language-specific files
 quality: ruff format . && ruff check . && mypy .
 test: pytest -q
 test-full: pytest --cov=src --cov-report=html
-version-sync: # Updates pyproject.toml, __init__.py files
+version-sync: # Updates VERSION, __init__.py files
 ```
 
 ### **C++ Implementation:**
@@ -140,7 +139,7 @@ version-sync: # Updates pyproject.toml, __init__.py files
 quality: clang-format -i src/**/*.cpp && clang-tidy src/ && cmake --build build/
 test: cd build && ctest --output-on-failure
 test-full: cd build && ctest --verbose
-version-sync: # Updates CMakeLists.txt, version.hpp
+version-sync: # Updates VERSION, CMakeLists.txt, version.hpp
 ```
 
 ## 🚀 **Quick Start Guide**
